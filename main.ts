@@ -47798,23 +47798,20 @@ const VexTab = vextab.VexTab;
 
 export default class MusicPlugin extends Plugin {
 	static postprocessor: MarkdownPostProcessor = async (el: HTMLElement, ctx: MarkdownPostProcessorContext) => {
-		console.log("post processor running")
 		MusicPlugin.render_vextab(el);
 	}
 
 	static render_vextab(el:HTMLElement) {
-			const data = `
-options space=20
-tabstave notation=true key=A time=4/4
+// 			const data = `
+// options space=20
+// tabstave notation=true key=A time=4/4
 
-notes :q =|: (5/2.5/3.7/4) :8 7-5h6/3 ^3^ 5h6-7/5 ^3^ :q 7V/4 |
-notes :8 t12p7/4 s5s3/4 :8 3s:16:5-7/5 :h p5/4
-text :w, |#segno, ,|, :hd, , #tr
+// notes :q =|: (5/2.5/3.7/4) :8 7-5h6/3 ^3^ 5h6-7/5 ^3^ :q 7V/4 |
+// notes :8 t12p7/4 s5s3/4 :8 3s:16:5-7/5 :h p5/4
+// text :w, |#segno, ,|, :hd, , #tr
 
-options space=25    
-`
-
-		console.log("Parsing vextab")
+// options space=25    
+// `
 
 		// Assumption: One section always contains only the code block
 		const blockToReplace = el.querySelector('pre')
@@ -47823,23 +47820,19 @@ options space=25
 		const musicBlock = blockToReplace.querySelector('code.language-vextab')
 		if (!musicBlock) return
 
-		console.log("Found element")
 		const renderer = new Renderer(blockToReplace, Renderer.Backends.SVG);
 		const artist = new Artist(10, 10, 750, { scale: 0.8 });
 
 		const tab = new VexTab(artist);
-		tab.parse(data);
-/*  */
+		tab.parse(musicBlock.textContent);
 		artist.render(renderer)
 	}
 
 	async onload() {
-		console.log('loading vextab plugin');
 		MarkdownPreviewRenderer.registerPostProcessor(MusicPlugin.postprocessor)
 	}
 
 	onunload() {
-		console.log('unloading vextab plugin');
 		MarkdownPreviewRenderer.unregisterPostProcessor(MusicPlugin.postprocessor)
 	}
 }
