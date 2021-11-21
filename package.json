@@ -19,5 +19,9 @@
 		"obsidian": "^0.12.17",
 		"tslib": "2.3.1",
 		"typescript": "4.4.4"
+	},
+	"dependencies": {
+		"node": "^17.1.0",
+		"vextab": "^3.0.6"
 	}
 }
