@@ -1,6 +1,7 @@
 import esbuild from "esbuild";
 import process from "process";
 import builtins from 'builtin-modules'
+import coffeescript_plugin from "esbuild-coffeescript";
 
 const banner =
 `/*
@@ -25,4 +26,5 @@ esbuild.build({
 	sourcemap: prod ? false : 'inline',
 	treeShaking: true,
 	outfile: 'main.js',
+	plugins: [coffeescript_plugin()],
 }).catch(() => process.exit(1));
